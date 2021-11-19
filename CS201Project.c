@@ -55,6 +55,43 @@ void Insert()
      }
  }
 
+void Search()
+{
+   char name[15];
+   printf("Enter the name of contact You want to search: \n");
+   scanf("%s",name);
+   int index = getkey(name[0]);
+   
+   struct Node* tmp = arr[index];
+    while(tmp != NULL)
+    {
+       if(strcmp(tmp->Name,name) == 0) 
+        { 
+            printf("                      Contact Details\n");
+            printf("  Name         : %s\n  Phone Number : %s\n",tmp->Name,tmp->Phnum);
+            return;
+        }
+        tmp =tmp->next;
+    }
+    printf("Contact not found! ");
+    
+}
+
+void Display()
+{
+  printf("\n                                All Contacts\n");
+  for(int i =0;i<26;i++)
+   {  
+       struct Node* tmp = arr[i];
+            
+             while(tmp != NULL)
+                   {
+                       printf("  %s - %s\n",tmp->Name,tmp->Phnum);
+                       tmp = tmp->next;
+                   }
+            
+   }
+}
 
 int main()
 {
@@ -62,16 +99,24 @@ int main()
     Arr();
     
     int a;
-   
+    printf("                               Welcome to Phone Directory\n");
     while(1)  //loop runs continuously till user opion 5 or if entered wrong choice
   {
-        printf("\n1. To Save a New contact\n ");
+        printf("\n1. To Save a New contact\n2. View all contacts\n3. Search for a contact\n ");
         printf("Enter your choice: ");
         scanf("%d",&a);
     switch(a)
     {
         case 1:     
           Insert();
+          break;
+
+        case 2:
+          Display();
+          break;
+          
+        case 3:
+          Search();
           break;
           
     }
