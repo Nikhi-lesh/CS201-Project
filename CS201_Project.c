@@ -67,7 +67,7 @@ void Search()
     {
        if(strcmp(tmp->Name,name) == 0) 
         { 
-            printf("                      Contact Details\n");
+            printf("                                Contact Details\n");
             printf("  Name         : %s\n  Phone Number : %s\n",tmp->Name,tmp->Phnum);
             return;
         }
@@ -93,6 +93,49 @@ void Display()
    }
 }
 
+void Delete()
+{
+    char name[15];
+    printf("Enter the name of contact You want to delete: ");
+    scanf("%s",name);
+    int index = getkey(name[0]); 
+    
+     struct Node*tmp = arr[index];
+     
+     while(tmp != NULL)
+     {
+          if(strcmp(tmp->Name,name) == 0) 
+          {
+              if(tmp == arr[index])
+                {
+                    if(tmp->next == NULL)
+                         arr[index] = NULL;
+                     else
+                     {
+                         arr[index] = tmp->next;
+                          tmp->next->prev = NULL;
+                     }
+                }
+              
+              else if(tmp->next == NULL)
+              {
+                  tmp->prev->next = NULL;
+                  tmp->prev=NULL;
+              }
+              
+              else
+              {
+                   tmp->prev->next=tmp->next;
+			   	   tmp->next->prev=tmp->prev; 
+                   tmp->prev=NULL;
+                   tmp->next=NULL; 
+              }
+          }
+         tmp = tmp->next;
+     }
+
+}
+
 int main()
 {
     arr = malloc(26*sizeof(struct Node*)); // Dynamically allocates an array of size 26
@@ -102,7 +145,7 @@ int main()
     printf("                               Welcome to Phone Directory\n");
     while(1)  //loop runs continuously till user opion 5 or if entered wrong choice
   {
-        printf("\n1. To Save a New contact\n2. View all contacts\n3. Search for a contact\n ");
+        printf("\n1. To Save a New contact\n2. View all contacts\n3. Search for a contact\n4. To Delete a contact\n6. Quit\n ");
         printf("Enter your choice: ");
         scanf("%d",&a);
     switch(a)
@@ -119,6 +162,16 @@ int main()
           Search();
           break;
           
+        case 4:
+          Delete();
+          break;
+          
+        case 6:
+          exit(0);
+
+        default:
+          printf("ENTER THE OPTION AMONG ABOVE ONES!!!\n");
+          break;
     }
      
   }
