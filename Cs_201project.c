@@ -15,7 +15,7 @@ struct Node** arr; // To globally declare this array , used concept of pointer t
 void Arr() //  Intialise all pointers in the array to NULL
  {
  	int j;
-    for(j=0; j<26 ; j++)
+    for(j=0; j<26 ; j++) 
         arr[j] = NULL;
  }
 
@@ -37,7 +37,7 @@ int getkey(char ch)//a funtion that returns its position among all alphabets
 void Insert()
  {
     struct Node* t = malloc(sizeof(struct Node));
-    printf("\nEnter the name(in small letters): ");
+    printf("\nEnter the name: ");
     scanf("%s",t->Name);
     printf("\nEnter the phone number: ");
     scanf("%s",t->Phnum);
@@ -136,6 +136,33 @@ void Delete()
 
 }
 
+void Edit()
+{
+    char name[15];
+    printf("Enter the name of contact You want to edit: ");
+    scanf("%s",name);
+    int index = getkey(name[0]); 
+    
+    struct Node* tmp = arr[index];
+        while(tmp != NULL)
+    {
+       if(strcmp(tmp->Name,name) == 0) 
+        { 
+           printf("                                Contact Details\n");
+           printf("  Name         : %s\n  Phone Number : %s\n",tmp->Name,tmp->Phnum);
+           
+           printf("\nEnter the Name: ");
+           scanf("%s",tmp->Name);
+           printf("\nEnter the phone number: ");
+           scanf("%s",tmp->Phnum);
+            return;
+        }
+        tmp =tmp->next;
+    }
+    
+}
+
+
 int main()
 {
     arr = malloc(26*sizeof(struct Node*)); // Dynamically allocates an array of size 26
@@ -143,9 +170,11 @@ int main()
     
     int a;
     printf("                               Welcome to Phone Directory\n");
-    while(1)  //loop runs continuously till user opion 5 or if entered wrong choice
+    printf("\n\n");
+    printf("                  { ENTER THE NAME IN SMALL LETTERS WITHOUT SPACES IN BETWEEN!} \n");
+    while(1)  
   {
-        printf("\n1. To Save a New contact\n2. View all contacts\n3. Search for a contact\n4. To Delete a contact\n6. Quit\n ");
+        printf("\n1. To Save a New contact\n2. View all contacts\n3. Search for a contact\n4. To Delete a contact\n5. To Edit Contact details\n6. Quit\n ");
         printf("Enter your choice: ");
         scanf("%d",&a);
     switch(a)
@@ -164,6 +193,10 @@ int main()
           
         case 4:
           Delete();
+          break;
+          
+        case 5:
+          Edit();
           break;
           
         case 6:
